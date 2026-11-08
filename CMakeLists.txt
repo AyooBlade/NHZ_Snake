@@ -10,7 +10,11 @@ list(APPEND CMAKE_PREFIX_PATH "C:/msys64/ucrt64")
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
-add_executable(NHZ_Snake main.c)
+add_executable(NHZ_Snake main.c
+        megjelenites.c
+        megjelenites.h
+        jatek.c
+        jatek.h)
 
 target_link_libraries(NHZ_Snake PRIVATE SDL2::SDL2 SDL2_image::SDL2_image SDL2_ttf)
 

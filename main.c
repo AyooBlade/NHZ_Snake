@@ -3,18 +3,11 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
 #include <stdbool.h>
-
-typedef struct Game{
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-}Game;
+#include "megjelenites.h"
+#include "jatek.h"
 
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-
-bool initSDL();
-void cleanup();
+static void esemeny_kezeles(Game *game, SDL_Event *event);
 
 
 int main(int argc, char *argv[]) {
@@ -24,48 +17,39 @@ int main(int argc, char *argv[]) {
     };
 
     if (initSDL(&game)) {
-        cleanup(&game);
+        cleanup(&game, EXIT_FAILURE);
         exit(1);
     }
+   bool gameGoing=true;
+    while (true) {
+        SDL_Event event;
+        while (SDL_PollEvent(&event)) {
+            esemeny_kezeles(&game, &event);
+        }
 
-    SDL_RenderClear(game.renderer);
+        SDL_RenderClear(game.renderer);
 
-    SDL_RenderPresent(game.renderer);
+        SDL_RenderPresent(game.renderer);
 
-    SDL_Delay(5000);
-
-    cleanup(&game);
-    exit(0);
+        SDL_Delay(16);                          //60fps-es loop
+    }
+    cleanup(&game, EXIT_SUCCESS);
     return 0;
 }
 
 
-
-
-void cleanup(Game *game) {
-    SDL_DestroyRenderer(game->renderer);
-    SDL_DestroyWindow(game->window);
-    SDL_Quit();
+//gombok, események kezelése, hogy mi történjen melyik gombra
+static void esemeny_kezeles(Game *game, SDL_Event *event) {
+    switch (event->type) {
+        case SDL_QUIT:
+            cleanup(game, EXIT_SUCCESS);
+            break;
+        default:
+            break;
+    }
 }
 
-bool initSDL(Game *game) {
-    if (SDL_Init(SDL_INIT_EVERYTHING)) {                                                //SDL inicializiasa összes flag-gel.
-        fprintf(stderr, "Nem sikerult inicaializalni az SDL: %s\n", SDL_GetError());
-        return true;
-    }
-    game->window = SDL_CreateWindow("The Snake Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH,WINDOW_HEIGHT,0);    //létrehozzuk az ablakot.
-    if (!game->window) {
-        fprintf(stderr, "Nem sikerult megcsinalni az ablakot: %s\n", SDL_GetError());
-        return true;
-    }
-    game->renderer = SDL_CreateRenderer(game->window, -1, 0);                           //létrehozzuk a renderer-t.
-    if (!game->renderer) {
-        fprintf(stderr, "Nem sikerult a renderer: %s\n", SDL_GetError());
-        return true;
-    }
 
 
-    return false;
-}
 
 
