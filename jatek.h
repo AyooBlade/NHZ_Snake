@@ -16,6 +16,7 @@ typedef enum Irany{FEL,LE,BALRA,JOBBRA} Irany;
 
 typedef struct Szegmens {
     int x,y;
+    int elozo_x, elozo_y;
     struct Szegmens *kovetkezo;
 }Szegmens;
 
@@ -34,4 +35,9 @@ typedef struct Jatek_m {
 
 void kigyo_fej_lep(Kigyo *kigyo);
 
+void kigyo_novekedes(Kigyo *kigyo);
+
 void kigyo_test_lep(Kigyo *kigyo);
+
+
+

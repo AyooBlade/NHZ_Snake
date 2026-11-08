@@ -9,14 +9,14 @@
 #include "megjelenites.h"
 
 
-
+//töröljük a memóriából az sdl-es dolgokat.
 void cleanup(Game *game, int exit_status) {
     SDL_DestroyRenderer(game->renderer);
     SDL_DestroyWindow(game->window);
     SDL_Quit();
     exit(exit_status);
 }
-
+//inicializáljuk az sdl-t True-t ad vissza ha hiba történik
 bool initSDL(Game *game) {
     if (SDL_Init(SDL_INIT_EVERYTHING)) {                                                //SDL inicializiasa összes flag-gel.
         fprintf(stderr, "Nem sikerult inicaializalni az SDL: %s\n", SDL_GetError());

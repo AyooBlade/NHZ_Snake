@@ -11,27 +11,24 @@ static void esemeny_kezeles(Game *game, SDL_Event *event, Kigyo *kigyo);
 
 
 int main(int argc, char *argv[]) {
+
     Game game = {
         .window = NULL,
         .renderer = NULL,
     };
 
-    Szegmens fej ={
-        .x = 0,
-        .y = 0,
-        .kovetkezo = NULL,
-    };
     Kigyo kigyo = {
         .irany = FEL,
-        .fej = fej,
-
+        .pont = 0,
+        .el = true,
     };
 
+    //csekkoljuk hogy az SDL nem e futott hibára
     if (initSDL(&game)) {
         cleanup(&game, EXIT_FAILURE);
         exit(1);
     }
-   bool gameGoing=true;
+
     while (true) {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
@@ -39,6 +36,10 @@ int main(int argc, char *argv[]) {
         }
 
         kigyo_fej_lep(&kigyo);
+        if (kigyo.pont> 0) {
+            kigyo_test_lep(&kigyo);
+        }
+
 
 
         SDL_RenderClear(game.renderer);
@@ -70,6 +71,12 @@ static void esemeny_kezeles(Game *game, SDL_Event *event, Kigyo *kigyo) {
                     break;
                 case SDLK_d:
                     kigyo->irany = JOBBRA;
+                    break;
+                case SDLK_q:
+                    kigyo->pont += 1;
+                    kigyo_novekedes(kigyo);
+                    break;
+                default:
                     break;
             }
             break;
