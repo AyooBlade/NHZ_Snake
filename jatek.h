@@ -7,7 +7,7 @@
 #ifndef NHZ_SNAKE_JATEK_H
 #define NHZ_SNAKE_JATEK_H
 
-#endif //NHZ_SNAKE_JATEK_H
+
 
 #define KIGYO_SPEED 150
 
@@ -30,7 +30,7 @@ typedef struct Kigyo {
 typedef struct Jatek_m {
     Kigyo kigyo[2];
     int kigyok_szama;
-};
+}Jatek_m;
 
 
 void kigyo_fej_lep(Kigyo *kigyo);
@@ -39,5 +39,6 @@ void kigyo_novekedes(Kigyo *kigyo);
 
 void kigyo_test_lep(Kigyo *kigyo);
 
+void clear_jatek(Kigyo *kigyo);
 
-
+#endif //NHZ_SNAKE_JATEK_H

@@ -9,6 +9,7 @@
 
 static Szegmens *farok(Kigyo *kigyo);
 
+//kígyó fejének mozgatása gombok által
 void kigyo_fej_lep(Kigyo *kigyo) {
     kigyo->fej.elozo_x = kigyo->fej.x;
     kigyo->fej.elozo_y = kigyo->fej.y;
@@ -56,10 +57,11 @@ void kigyo_test_lep(Kigyo *kigyo) {
 
         current = current->kovetkezo;
 
-        //teszt
-        printf("fej: (%d, %d) | ", kigyo->fej.x, kigyo->fej.y);
-        printf("2.   (%d, %d)\n", kigyo->fej.kovetkezo->x, kigyo->fej.kovetkezo->y);
+
     }
+    //teszt
+    printf("fej: (%d, %d) | ", kigyo->fej.x, kigyo->fej.y);
+    printf("2.   (%d, %d)\n", kigyo->fej.kovetkezo->x, kigyo->fej.kovetkezo->y);
 }
 
 //farok megkeresése --> utolsó szegmens megkeresése
@@ -71,3 +73,12 @@ static Szegmens *farok(Kigyo *kigyo) {
     return current;
 }
 
+
+void clear_jatek(Kigyo *kigyo) {
+    Szegmens *current =  kigyo->fej.kovetkezo;
+    while (current != NULL) {
+        Szegmens *kov = current->kovetkezo;
+        free(current);
+        current = kov;
+    }
+}

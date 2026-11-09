@@ -5,7 +5,7 @@
 #ifndef NHZ_SNAKE_MEGJELENITES_H
 #define NHZ_SNAKE_MEGJELENITES_H
 
-#endif //NHZ_SNAKE_MEGJELENITES_H
+
 
 
 typedef struct Game{
@@ -21,3 +21,4 @@ typedef struct Game{
 bool initSDL(Game *game);
 void cleanup(Game *game, int exit_status);
 
+#endif //NHZ_SNAKE_MEGJELENITES_H

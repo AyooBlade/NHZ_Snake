@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include "megjelenites.h"
 #include "jatek.h"
-
+#include "debugmalloc.h"
 
 static void esemeny_kezeles(Game *game, SDL_Event *event, Kigyo *kigyo);
 
@@ -29,6 +29,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
+    //Jatek
     while (true) {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
@@ -46,7 +47,7 @@ int main(int argc, char *argv[]) {
 
         SDL_RenderPresent(game.renderer);
 
-        SDL_Delay(1000);                          //60fps-es loop 16ms
+        SDL_Delay(1000);                          //60fps-es loop: 16ms
     }
     cleanup(&game, EXIT_SUCCESS);
     return 0;
@@ -57,6 +58,7 @@ int main(int argc, char *argv[]) {
 static void esemeny_kezeles(Game *game, SDL_Event *event, Kigyo *kigyo) {
     switch (event->type) {
         case SDL_QUIT:
+            clear_jatek(kigyo);
             cleanup(game, EXIT_SUCCESS);
         case SDL_KEYDOWN:
             switch (event->key.keysym.sym) {

@@ -14,7 +14,8 @@ add_executable(NHZ_Snake main.c
         megjelenites.c
         megjelenites.h
         jatek.c
-        jatek.h)
+        jatek.h
+        debugmalloc.h)
 
 target_link_libraries(NHZ_Snake PRIVATE SDL2::SDL2 SDL2_image::SDL2_image SDL2_ttf)
 
