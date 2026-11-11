@@ -36,3 +36,28 @@ bool initSDL(Game *game) {
 
     return false;
 }
+
+void kigyo_fej_kirajz(Kigyo *kigyo, Game *game) {
+    int fejx = kigyo->fej.x*50;
+    int fejy = kigyo->fej.y*50;
+
+    SDL_Rect negyzet = {fejx,fejy,50,50};
+    SDL_SetRenderDrawColor(game->renderer, 255, 0, 0, 255);
+    SDL_RenderFillRect(game->renderer, &negyzet);                       //kocka kitöltése
+    SDL_RenderDrawRect(game->renderer, &negyzet);
+
+}
+void kigyo_test_kirajz(Kigyo *kigyo, Game *game) {
+    Szegmens *current = kigyo->fej.kovetkezo;
+
+    while (current != NULL) {
+        int test_x = current->x*50;
+        int test_y = current->y*50;
+        SDL_Rect negyzet = {test_x,test_y,50,50};
+        SDL_SetRenderDrawColor(game->renderer, 255, 0, 0, 255);
+        SDL_RenderFillRect(game->renderer, &negyzet);                       //kocka kitöltése
+        SDL_RenderDrawRect(game->renderer, &negyzet);
+        current = current->kovetkezo;
+    }
+
+}

@@ -16,10 +16,10 @@ void kigyo_fej_lep(Kigyo *kigyo) {
 
     switch (kigyo->irany) {
         case FEL:
-            kigyo->fej.y +=1;
+            kigyo->fej.y -=1;
             break;
         case LE:
-            kigyo->fej.y -=1;
+            kigyo->fej.y +=1;
             break;
         case BALRA:
             kigyo->fej.x -=1;
