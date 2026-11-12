@@ -41,4 +41,6 @@ void kigyo_test_lep(Kigyo *kigyo);
 
 void clear_jatek(Kigyo *kigyo);
 
+void pontok(Kigyo *kigyo);
+
 #endif //NHZ_SNAKE_JATEK_H

@@ -38,6 +38,9 @@ void kigyo_novekedes(Kigyo *kigyo) {
     Szegmens *utolso = farok(kigyo);
 
     utolso->kovetkezo = (Szegmens *)malloc(sizeof(Szegmens));                       //lefoglaljuk az uj testrensznek(szegmens) a memoriat
+    if (utolso->kovetkezo == NULL) {                                                     //ha nem foglalná le a memóriát
+        return;
+    }
     utolso->kovetkezo->kovetkezo = NULL;                                                //Null-ozzuk itt az új faroknak a .kovetkezo pointerét mert memória szemét lehet benne.
     utolso->kovetkezo->x = utolso->elozo_x;                                             //az új testrésznek megadjuk a koordinátát hogy hova kerüljön.
     utolso->kovetkezo->y = utolso->elozo_y;
