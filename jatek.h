@@ -27,6 +27,12 @@ typedef struct Kigyo {
     bool el;
 }Kigyo;
 
+typedef struct Etel {
+    int x,y;
+    bool van_e;
+}Etel;
+
+
 typedef struct Jatek_m {
     Kigyo kigyo[2];
     int kigyok_szama;
@@ -41,6 +47,8 @@ void kigyo_test_lep(Kigyo *kigyo);
 
 void clear_jatek(Kigyo *kigyo);
 
-void pontok(Kigyo *kigyo);
+void etel_spawn(Kigyo *kigyo, Etel *etel);
+
+bool etel_felszedes(Kigyo *kigyo, Etel *etel);
 
 #endif //NHZ_SNAKE_JATEK_H

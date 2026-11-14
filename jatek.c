@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 static Szegmens *farok(Kigyo *kigyo);
 
@@ -63,8 +64,8 @@ void kigyo_test_lep(Kigyo *kigyo) {
 
     }
     //teszt
-    printf("fej: (%d, %d) | ", kigyo->fej.x, kigyo->fej.y);
-    printf("2.   (%d, %d)\n", kigyo->fej.kovetkezo->x, kigyo->fej.kovetkezo->y);
+   // printf("fej: (%d, %d) | ", kigyo->fej.x, kigyo->fej.y);
+   // printf("2.   (%d, %d)\n", kigyo->fej.kovetkezo->x, kigyo->fej.kovetkezo->y);
 }
 
 //farok megkeresése --> utolsó szegmens megkeresése
@@ -76,6 +77,17 @@ static Szegmens *farok(Kigyo *kigyo) {
     return current;
 }
 
+//koordinatat generál az ételnek
+void etel_spawn(Kigyo *kigyo, Etel *etel) {
+    srand(time(NULL));
+    etel->x = rand() % 10;
+    etel->y = rand() % 10;
+}
+
+
+bool etel_felszedes(Kigyo *kigyo, Etel *etel) {
+    return kigyo->fej.x == etel->x && kigyo->fej.y == etel->y;
+}
 
 void clear_jatek(Kigyo *kigyo) {
     Szegmens *current =  kigyo->fej.kovetkezo;

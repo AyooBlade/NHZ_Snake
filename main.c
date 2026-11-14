@@ -7,16 +7,15 @@
 #include "jatek.h"
 #include "debugmalloc.h"
 
-static void esemeny_kezeles(Game *game, SDL_Event *event, Kigyo *kigyo);
+static void esemeny_kezeles(Game *game, SDL_Event *event, Kigyo *kigyo, Etel *etel);
 
 
 int main(int argc, char *argv[]) {
-
+    Etel etel;
     Game game = {
         .window = NULL,
         .renderer = NULL,
     };
-
     Kigyo kigyo = {
         .irany = LE,
         .pont = 0,
@@ -33,27 +32,45 @@ int main(int argc, char *argv[]) {
 
     //Jatek
     while (true) {
+
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
-            esemeny_kezeles(&game, &event, &kigyo);
+            esemeny_kezeles(&game, &event, &kigyo, &etel);
         }
-
 
                                                                                                     //kígyó mozgatása
         currentTime = SDL_GetTicks();
         if (currentTime > lastTime + KIGYO_SPEED) {
             kigyo_fej_lep(&kigyo);
+            //printf("etel: %d, %d | fej: %d, %d\n", etel.x, etel.y,kigyo.fej.x, kigyo.fej.y);
             if (kigyo.pont> 0) {
                 kigyo_test_lep(&kigyo);
             }
             lastTime = currentTime;
         }
+        if (!etel.van_e) {                                                                         //megnézzük van e már letéve étel ha nem letesszük.
+            etel_spawn(&kigyo, &etel);
+            etel.van_e = true;
+        }
+
+        bool felvette = etel_felszedes(&kigyo, &etel);                                              //felvette a kigyó az ételt vizsgálása
+        if (felvette) {
+            etel.van_e = false;
+            felvette = false;
+            kigyo_novekedes(&kigyo);
+            kigyo.pont += 1;
+
+        }
+
 
         SDL_RenderClear(game.renderer);
 
 
-        kigyo_fej_kirajz(&kigyo, &game);
-        kigyo_test_kirajz(&kigyo, &game);
+        kigyo_fej_kirajz(&kigyo, &game);                                                           //kigyó feje kirajzolása
+        kigyo_test_kirajz(&kigyo, &game);                                                           //kigyó teste kirajzolása
+
+        etel_kirajz(&game, &etel);
+
         SDL_SetRenderDrawColor(game.renderer, 0, 0, 0, 255);
         SDL_RenderPresent(game.renderer);   //frissiti a kepernyot
 
@@ -65,7 +82,7 @@ int main(int argc, char *argv[]) {
 
 
 //gombok, események kezelése, hogy mi történjen melyik gombra
-static void esemeny_kezeles(Game *game, SDL_Event *event, Kigyo *kigyo) {
+static void esemeny_kezeles(Game *game, SDL_Event *event, Kigyo *kigyo, Etel *etel) {
     switch (event->type) {
         case SDL_QUIT:
             clear_jatek(kigyo);
@@ -90,6 +107,7 @@ static void esemeny_kezeles(Game *game, SDL_Event *event, Kigyo *kigyo) {
                     break;
                 case SDLK_q:                                                            //pont hozzáadás
                     kigyo->pont += 1;
+                    etel->van_e = false;
                     kigyo_novekedes(kigyo);
                     break;
                 default:

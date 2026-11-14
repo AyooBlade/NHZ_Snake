@@ -59,5 +59,13 @@ void kigyo_test_kirajz(Kigyo *kigyo, Game *game) {
         SDL_RenderDrawRect(game->renderer, &negyzet);
         current = current->kovetkezo;
     }
+}
 
+void etel_kirajz(Game *game,Etel *etel) {
+    int etel_x = etel->x*50;
+    int etel_y = etel->y*50;
+    SDL_Rect negyzet = {etel_x,etel_y,50,50};
+    SDL_SetRenderDrawColor(game->renderer, 0, 0, 255, 255);
+    SDL_RenderFillRect(game->renderer, &negyzet);
+    SDL_RenderDrawRect(game->renderer, &negyzet);
 }

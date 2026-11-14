@@ -22,6 +22,6 @@ bool initSDL(Game *game);
 void cleanup(Game *game, int exit_status);
 void kigyo_fej_kirajz(Kigyo *kigyo, Game *game);
 void kigyo_test_kirajz(Kigyo *kigyo, Game *game);
-
+void etel_kirajz(Game *game,Etel *etel);
 
 #endif //NHZ_SNAKE_MEGJELENITES_H
